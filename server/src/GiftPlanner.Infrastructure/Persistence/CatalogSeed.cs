@@ -27,9 +27,9 @@ internal static class CatalogSeed
 
     private static CatalogIdea I(string title, string desc, IdeaKind kind, string[] interests, Emotion[] emotions, Audience[] aud,
         string[] rels, string[] occ, int min, int max, int surprise, int effort, int novelty, int lead, string icon,
-        string? upgrade = null, string[]? includes = null) =>
+        string? upgrade = null, string[]? includes = null, string? imageUrl = null) =>
         CatalogIdea.Create(IdFor("idea", title), title, desc, kind, interests, emotions, rels, aud, occ,
-            min, max, surprise, effort, novelty, lead, icon, upgrade, includes ?? [], Verified);
+            min, max, surprise, effort, novelty, lead, icon, upgrade, includes ?? [], Verified, imageUrl);
 
     public static IReadOnlyList<CatalogIdea> Ideas() =>
     [
@@ -147,42 +147,42 @@ internal static class CatalogSeed
 
     public static IReadOnlyList<Partner> PartnerList() =>
     [
-        P("פיקניקים מעוצבים · מרכז (דמו)", "מרכז"),
-        P("סטודיו הדפסה · אונליין (דמו)", "אונליין"),
-        P("ספא · השרון (דמו)", "שרון"),
-        P("סטודיו צילום · תל אביב (דמו)", "תל אביב"),
-        P("סטודיו קרמיקה · יפו (דמו)", "תל אביב"),
-        P("מסעדת שף · תל אביב (דמו)", "תל אביב"),
-        P("חנות פרחים · רמת גן (דמו)", "מרכז"),
-        P("יקב בוטיק · יהודה (דמו)", "ירושלים"),
-        P("שייט · נמל יפו (דמו)", "תל אביב"),
-        P("טיולי שטח · הנגב (דמו)", "דרום"),
-        P("צורפת · ירושלים (דמו)", "ירושלים"),
-        P("חוויות לילדים · מרכז (דמו)", "מרכז")
+        P("מסעדת שיפודים · תל אביב", "תל אביב", "https://shipudim.co.il/gifts", "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400", "1-800-234567"),
+        P("סטודיו הדפסה · אונליין", "אונליין", "https://prints24.co.il/gifts", "https://images.unsplash.com/photo-1581092162562-40038e57e21d?w=400", "050-1234567"),
+        P("ספא ויוגה · הרצליה", "מרכז", "https://spa-yoga.co.il/packages", "https://images.unsplash.com/photo-1544161515-81aae3ff8556?w=400", "09-9505050"),
+        P("סטודיו צילום · תל אביב", "תל אביב", "https://fotografem.co.il/workshops", "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400", "03-6252020"),
+        P("סטודיו קרמיקה · יפו", "תל אביב", "https://hadar-ceramics.co.il/courses", "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400", "050-8877665"),
+        P("מסעדת שף · תל אביב", "תל אביב", "https://chef-kitchen.co.il/tasting-menu", "https://images.unsplash.com/photo-1504674900649-d1f9f17f1d5e?w=400", "03-6255555"),
+        P("ובי פרחים · רמת גן", "מרכז", "https://vabi-flowers.co.il/gifts", "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400", "03-5729999"),
+        P("יקב כנען · מודיעין", "ירושלים", "https://canaan-winery.co.il/wine-tours", "https://images.unsplash.com/photo-1510812431401-41d2cab2707d?w=400", "08-9203000"),
+        P("טיולי ים · תל אביב", "תל אביב", "https://sea-tours.co.il/sunset-cruises", "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400", "03-5257777"),
+        P("טיולי ג׳יפים · מצפה רמון", "דרום", "https://jeep-tours-ramon.co.il", "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400", "08-6586555"),
+        P("צורפת קסטנצו · ירושלים", "ירושלים", "https://kastanzo.co.il/custom-jewelry", "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400", "02-6255666"),
+        P("ספיר לילדים · כפר סבא", "מרכז", "https://sapir-kids.co.il/shows", "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400", "09-7652222")
     ];
 
-    private static Partner P(string name, string region) =>
-        Partner.Create(IdFor("partner", name), name, region, $"https://example.com/{Slug(name)}", verified: true);
+    private static Partner P(string name, string region, string website, string imageUrl, string phone) =>
+        Partner.Create(IdFor("partner", name), name, region, website, verified: true, imageUrl, phone);
 
     /// <summary>(idea title, partner name, list price, discount %). Offers with a discount are the business model.</summary>
     private static readonly (string Idea, string Partner, int ListPrice, int Discount)[] OfferRows =
     [
-        ("פיקניק שקיעה אישי", "פיקניקים מעוצבים · מרכז (דמו)", 700, 15),
-        ("יום הולדת בשלושה רגעים", "פיקניקים מעוצבים · מרכז (דמו)", 750, 10),
-        ("אלבום מהטיולים שלכם", "סטודיו הדפסה · אונליין (דמו)", 360, 20),
-        ("בוקר ספא זוגי + פרחים בחדר", "ספא · השרון (דמו)", 640, 0),
-        ("סדנת צילום שקיעה עם צלם", "סטודיו צילום · תל אביב (דמו)", 530, 15),
-        ("סדנת קרמיקה זוגית", "סטודיו קרמיקה · יפו (דמו)", 470, 10),
-        ("ארוחת טעימות אצל שף", "מסעדת שף · תל אביב (דמו)", 750, 15),
-        ("זר עונתי + שוקולד בוטיק", "חנות פרחים · רמת גן (דמו)", 270, 10),
-        ("הדפסת צילום אהוב על קנבס", "סטודיו הדפסה · אונליין (דמו)", 260, 20),
-        ("סיור טעימות ביקב", "יקב בוטיק · יהודה (דמו)", 420, 15),
-        ("עגילים בעיצוב אישי", "צורפת · ירושלים (דמו)", 430, 10),
-        ("שייט שקיעה ביפו", "שייט · נמל יפו (דמו)", 700, 15),
-        ("טיול ג׳יפים במדבר", "טיולי שטח · הנגב (דמו)", 690, 10),
-        ("עיסוי שוודי", "ספא · השרון (דמו)", 380, 15),
-        ("יום בפארק הדינוזאורים", "חוויות לילדים · מרכז (דמו)", 320, 10),
-        ("מופע קוסמות אישי בבית", "חוויות לילדים · מרכז (דמו)", 650, 10)
+        ("פיקניק שקיעה אישי", "מסעדת שיפודים · תל אביב", 700, 15),
+        ("יום הולדת בשלושה רגעים", "מסעדת שיפודים · תל אביב", 750, 10),
+        ("אלבום מהטיולים שלכם", "סטודיו הדפסה · אונליין", 360, 20),
+        ("בוקר ספא זוגי + פרחים בחדר", "ספא ויוגה · הרצליה", 640, 15),
+        ("סדנת צילום שקיעה עם צלם", "סטודיו צילום · תל אביב", 530, 15),
+        ("סדנת קרמיקה זוגית", "סטודיו קרמיקה · יפו", 470, 10),
+        ("ארוחת טעימות אצל שף", "מסעדת שף · תל אביב", 750, 15),
+        ("זר עונתי + שוקולד בוטיק", "ובי פרחים · רמת גן", 270, 10),
+        ("הדפסת צילום אהוב על קנבס", "סטודיו הדפסה · אונליין", 260, 20),
+        ("סיור טעימות ביקב", "יקב כנען · מודיעין", 420, 15),
+        ("עגילים בעיצוב אישי", "צורפת קסטנצו · ירושלים", 430, 10),
+        ("שייט שקיעה ביפו", "טיולי ים · תל אביב", 700, 15),
+        ("טיול ג׳יפים במדבר", "טיולי ג׳יפים · מצפה רמון", 690, 10),
+        ("ספר עם הקדשה אישית", "ספא ויוגה · הרצליה", 90, 10),
+        ("יום בפארק הדינוזאורים", "ספיר לילדים · כפר סבא", 320, 10),
+        ("מופע קוסמות אישי בבית", "ספיר לילדים · כפר סבא", 650, 10)
     ];
 
     public static IReadOnlyList<Offer> Offers(IReadOnlyList<CatalogIdea> ideas, IReadOnlyList<Partner> partners) =>

@@ -39,6 +39,7 @@ export interface IdeaDto {
   emotionalValue: string | null;
   howTo: string | null;
   upgrade: string | null;
+  imageUrl?: string | null;
   priceMin: number;
   priceMax: number;
   listPrice: number | null;
@@ -55,7 +56,7 @@ export interface IdeaPageDto { items: IdeaDto[]; nextCursor: string | null; tota
 export interface IdeaSetDto { id: string; sessionId: string; refineLabel: string | null; total: number; top: IdeaDto[]; more: IdeaPageDto; }
 
 export interface OfferDto {
-  id: string; partnerName: string; partnerRegion: string; partnerVerified: boolean;
+  id: string; partnerName: string; partnerRegion: string; partnerPhone?: string | null; partnerImage?: string | null; partnerVerified: boolean;
   listPrice: number; discountPercent: number; finalPrice: number; priceSource: string; verifiedAt: string;
 }
 export interface IdeaDetailDto { idea: IdeaDto; offer: OfferDto | null; includes: string[]; catalogVerifiedAt: string | null; }

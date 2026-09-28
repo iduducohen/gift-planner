@@ -25,6 +25,7 @@ public sealed class CatalogIdea : Entity
     public int Novelty { get; private set; }
     public int LeadTimeDays { get; private set; }
     public string IconKey { get; private set; } = "gift";
+    public string? ImageUrl { get; private set; }
     public string? Upgrade { get; private set; }
     public List<string> Includes { get; private set; } = [];
     public DateOnly VerifiedAt { get; private set; }
@@ -37,7 +38,7 @@ public sealed class CatalogIdea : Entity
         IEnumerable<string> interests, IEnumerable<Emotion> emotions, IEnumerable<string> relationships,
         IEnumerable<Audience> audiences, IEnumerable<string> occasions,
         int priceMin, int priceMax, int surprise, int effort, int novelty, int leadTimeDays,
-        string iconKey, string? upgrade, IEnumerable<string> includes, DateOnly verifiedAt)
+        string iconKey, string? upgrade, IEnumerable<string> includes, DateOnly verifiedAt, string? imageUrl = null)
     {
         if (priceMin < 0 || priceMax < priceMin)
             throw new DomainException("validation", "Invalid price range.");
@@ -61,6 +62,7 @@ public sealed class CatalogIdea : Entity
             Novelty = Level(novelty),
             LeadTimeDays = Math.Max(0, leadTimeDays),
             IconKey = iconKey,
+            ImageUrl = imageUrl,
             Upgrade = upgrade,
             Includes = includes.ToList(),
             VerifiedAt = verifiedAt
@@ -76,12 +78,14 @@ public sealed class Partner : Entity
     public string Name { get; private set; } = "";
     public string Region { get; private set; } = "";
     public string Website { get; private set; } = "";
+    public string? ImageUrl { get; private set; }
+    public string? Phone { get; private set; }
     public bool IsVerified { get; private set; }
 
     private Partner() { }
 
-    public static Partner Create(Guid id, string name, string region, string website, bool verified) =>
-        new() { Id = id, Name = Guard.NotBlank(name, nameof(name)), Region = region, Website = website, IsVerified = verified };
+    public static Partner Create(Guid id, string name, string region, string website, bool verified, string? imageUrl = null, string? phone = null) =>
+        new() { Id = id, Name = Guard.NotBlank(name, nameof(name)), Region = region, Website = website, IsVerified = verified, ImageUrl = imageUrl, Phone = phone };
 }
 
 /// <summary>A purchasable offer for a catalog idea from a partner, including the negotiated discount.</summary>
