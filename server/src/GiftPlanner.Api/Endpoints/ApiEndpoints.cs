@@ -84,6 +84,9 @@ public static class ApiEndpoints
     {
         var g = api.MapGroup("").WithTags("Ideas");
 
+        g.MapGet("/idea-sets/{id:guid}", async (Guid id, IIdeaService ideas, CancellationToken ct) =>
+            (await ideas.GetSetAsync(id, ct)).ToHttp());
+
         // Cursor paging feeds the client's virtual-scroll grid.
         g.MapGet("/idea-sets/{id:guid}/ideas", async (Guid id, string? cursor, int? limit, string? filter, IIdeaService ideas, CancellationToken ct) =>
             (await ideas.GetPageAsync(id, cursor, limit ?? IdeaService.DefaultPageSize, filter, ct)).ToHttp());

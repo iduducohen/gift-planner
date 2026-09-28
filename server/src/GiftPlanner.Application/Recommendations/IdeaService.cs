@@ -15,6 +15,7 @@ namespace GiftPlanner.Application.Recommendations;
 public interface IIdeaService
 {
     Task<Result<IdeaSetDto>> GenerateAsync(Guid sessionId, GenerateIdeasRequest request, CancellationToken ct);
+    Task<Result<IdeaSetDto>> GetSetAsync(Guid setId, CancellationToken ct);
     Task<Result<IdeaPageDto>> GetPageAsync(Guid setId, string? cursor, int limit, string? filter, CancellationToken ct);
     Task<Result<IdeaDetailDto>> GetDetailAsync(Guid recommendationId, CancellationToken ct);
     IReadOnlyList<RefineOptionDto> GetRefineOptions();
@@ -137,6 +138,17 @@ public sealed class IdeaService(
         var topDtos = set.Items.Where(r => r.IsTop).Select(r => r.ToDto(savedIds.Contains(r.Id))).ToList();
         var more = Page(set, 0, DefaultPageSize, null, savedIds);
         return new IdeaSetDto(set.Id, session.Id, strategy?.Label ?? request.RefineText, set.Items.Count, topDtos, more);
+    }
+
+    /// <summary>Re-opens a generated set (refresh, deep link, back navigation) without re-running the engine or the LLM.</summary>
+    public async Task<Result<IdeaSetDto>> GetSetAsync(Guid setId, CancellationToken ct)
+    {
+        var set = await sets.GetAsync(setId, user.UserId, ct);
+        if (set is null) return Error.NotFound("Idea set");
+        var savedIds = await SavedIdsAsync(ct);
+        var top = set.Items.Where(r => r.IsTop).OrderBy(r => r.Rank).Select(r => r.ToDto(savedIds.Contains(r.Id))).ToList();
+        var label = set.RefinePreset is { } key ? refine.All.FirstOrDefault(s => s.Key == key)?.Label : set.RefineText;
+        return new IdeaSetDto(set.Id, set.SessionId, label, set.Items.Count, top, Page(set, 0, DefaultPageSize, null, savedIds));
     }
 
     public async Task<Result<IdeaPageDto>> GetPageAsync(Guid setId, string? cursor, int limit, string? filter, CancellationToken ct)

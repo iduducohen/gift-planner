@@ -1,0 +1,42 @@
+# Local stack: PostgreSQL + Redis + API + client.
+#   JWT_SIGNING_KEY=$(openssl rand -hex 32) docker compose up --build
+# then open http://localhost:8100
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: giftplanner
+      POSTGRES_USER: gift
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gift}
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gift -d giftplanner"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  api:
+    build: ./server
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_started }
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=giftplanner;Username=gift;Password=${POSTGRES_PASSWORD:-gift}
+      ConnectionStrings__Redis: redis:6379
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:?Set JWT_SIGNING_KEY (32+ chars)}
+      Llm__ApiKey: ${ANTHROPIC_API_KEY:-}
+      Auth__EnableDevProvider: "true"
+    ports: ["5080:8080"]
+
+  client:
+    build: ./client
+    depends_on: [api]
+    ports: ["8100:80"]
+
+volumes:
+  pgdata:
