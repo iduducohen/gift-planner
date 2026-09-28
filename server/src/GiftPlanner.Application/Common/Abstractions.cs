@@ -89,7 +89,7 @@ public interface ICatalogReader
 public sealed record OfferQuote(
     Guid OfferId, Guid IdeaId, Guid PartnerId, string PartnerName, string PartnerRegion, bool PartnerVerified,
     int ListPrice, int DiscountPercent, int FinalPrice, string Url, string CouponCode,
-    PriceSource PriceSource, DateOnly VerifiedAt, bool IsSponsored);
+    PriceSource PriceSource, DateOnly VerifiedAt, bool IsSponsored, string? PartnerPhone = null, string? PartnerImage = null);
 
 /// <summary>
 /// Open/Closed extension point for suppliers. Adding flowers, vouchers or hotels = a new implementation

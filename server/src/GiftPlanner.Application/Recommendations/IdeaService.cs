@@ -168,7 +168,7 @@ public sealed class IdeaService(
         var quote = (await offers.BestOffersAsync([rec.CatalogIdeaId], ct)).GetValueOrDefault(rec.CatalogIdeaId);
         var offerDto = quote is null
             ? null
-            : new OfferDto(quote.OfferId, quote.PartnerName, quote.PartnerRegion, quote.PartnerVerified, quote.ListPrice,
+            : new OfferDto(quote.OfferId, quote.PartnerName, quote.PartnerRegion, quote.PartnerPhone, quote.PartnerImage, quote.PartnerVerified, quote.ListPrice,
                 quote.DiscountPercent, quote.FinalPrice, Mapping.SourceKey(quote.PriceSource), quote.VerifiedAt);
         var isSaved = await saved.FindAsync(user.UserId, rec.Id, ct) is not null;
         return new IdeaDetailDto(rec.ToDto(isSaved), offerDto, idea?.Includes ?? [], idea?.VerifiedAt);

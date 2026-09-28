@@ -52,9 +52,16 @@ import { Icon } from './icon';
 
         @if (dd.offer; as o) {
           <div class="partner card">
-            <span class="logo">{{ o.partnerName.charAt(0) }}</span>
-            <span class="txt"><b>{{ o.partnerName }}</b>
-              <span class="small" [class.ok]="o.partnerVerified">{{ o.partnerVerified ? '✓ עסק שותף מאומת' : 'עסק' }} · {{ o.partnerRegion }}</span></span>
+            @if (o.partnerImage) {
+              <img [src]="o.partnerImage" [alt]="o.partnerName" class="partner-img">
+            } @else {
+              <span class="logo">{{ o.partnerName.charAt(0) }}</span>
+            }
+            <span class="txt">
+              <b>{{ o.partnerName }}</b>
+              <span class="small" [class.ok]="o.partnerVerified">{{ o.partnerVerified ? '✓ עסק שותף מאומת' : 'עסק' }} · {{ o.partnerRegion }}</span>
+              @if (o.partnerPhone) { <span class="phone"><app-icon name="phone" [size]="14" />{{ o.partnerPhone }}</span> }
+            </span>
           </div>
         }
 
@@ -112,8 +119,11 @@ import { Icon } from './icon';
     .price s { color: var(--faint); font-size: 16px; }
     .save-amt { color: var(--deal); font-weight: 700; font-size: 15px; }
     .partner { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
-    .logo { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-weight: 700; }
-    .partner .txt { display: flex; flex-direction: column; gap: 2px; }
+    .logo { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .partner-img { width: 44px; height: 44px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+    .partner .txt { display: flex; flex-direction: column; gap: 4px; }
+    .phone { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--muted); font-weight: 500; }
+    .phone app-icon { color: var(--accent); }
     .ok { color: var(--deal); font-weight: 600; }
     .body { font-size: 17px; line-height: 1.6; }
     .includes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }

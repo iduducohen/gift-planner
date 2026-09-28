@@ -123,7 +123,7 @@ internal sealed class CuratedCatalogOfferProvider(AppDbContext db) : IOfferProvi
         return rows.Select(x => new OfferQuote(
             x.o.Id, x.o.CatalogIdeaId, x.p.Id, x.p.Name, x.p.Region, x.p.IsVerified,
             x.o.ListPrice, x.o.DiscountPercent, x.o.FinalPrice, x.o.Url, x.o.CouponCode,
-            x.o.PriceSource, x.o.VerifiedAt, x.o.IsSponsored)).ToList();
+            x.o.PriceSource, x.o.VerifiedAt, x.o.IsSponsored, x.p.Phone, x.p.ImageUrl)).ToList();
     }
 }
 

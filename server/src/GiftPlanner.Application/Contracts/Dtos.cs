@@ -52,7 +52,7 @@ public sealed record IdeaPageDto(IReadOnlyList<IdeaDto> Items, string? NextCurso
 public sealed record IdeaSetDto(Guid Id, Guid SessionId, string? RefineLabel, int Total, IReadOnlyList<IdeaDto> Top, IdeaPageDto More);
 
 public sealed record OfferDto(
-    Guid Id, string PartnerName, string PartnerRegion, bool PartnerVerified,
+    Guid Id, string PartnerName, string PartnerRegion, string? PartnerPhone, string? PartnerImage, bool PartnerVerified,
     int ListPrice, int DiscountPercent, int FinalPrice, string PriceSource, DateOnly VerifiedAt);
 
 public sealed record IdeaDetailDto(IdeaDto Idea, OfferDto? Offer, IReadOnlyList<string> Includes, DateOnly? CatalogVerifiedAt);
