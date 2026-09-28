@@ -228,6 +228,8 @@ internal sealed class CatalogConfig : IEntityTypeConfiguration<CatalogIdea>, IEn
         b.Property(x => x.Name).HasMaxLength(120);
         b.Property(x => x.Region).HasMaxLength(60);
         b.Property(x => x.Website).HasMaxLength(300);
+        b.Property(x => x.ImageUrl).HasMaxLength(500);
+        b.Property(x => x.Phone).HasMaxLength(20);
     }
 
     public void Configure(EntityTypeBuilder<Offer> b)
