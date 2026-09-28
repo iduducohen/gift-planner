@@ -3,6 +3,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessC
 import { RouteReuseStrategy, provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { routes } from './app.routes';
+import { provideAnalytics } from './core/analytics';
 import { authInterceptor } from './core/auth';
 
 export const appConfig: ApplicationConfig = {
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular({ mode: 'ios', animated: true, useSetInputAPI: true }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor]))
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideAnalytics()
   ]
 };

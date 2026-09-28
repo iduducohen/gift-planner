@@ -1,0 +1,62 @@
+# Compose file for running tests - override services to run tests instead
+version: '3.8'
+
+services:
+  postgres:
+    # Use postgres for tests
+    profiles:
+      - test
+
+  redis:
+    profiles:
+      - test
+
+  api:
+    build:
+      context: ./server
+      target: test
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_started }
+    environment:
+      ASPNETCORE_ENVIRONMENT: Testing
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=giftplanner_test;Username=gift;Password=${POSTGRES_PASSWORD:-gift}
+      ConnectionStrings__Redis: redis:6379
+      Jwt__SigningKey: test-key-minimum-32-characters-long
+      Llm__ApiKey: test-api-key
+      Auth__EnableDevProvider: "true"
+    ports: ["5080:8080"]
+    command: >
+      sh -c "
+      dotnet test tests/GiftPlanner.Application.Tests/GiftPlanner.Application.Tests.csproj
+      "
+    profiles:
+      - test
+
+  client:
+    build:
+      context: ./client
+      target: test
+    depends_on: [api]
+    environment:
+      CI: "true"
+    command: npm test
+    ports: ["8100:80"]
+    profiles:
+      - test
+
+  e2e:
+    build:
+      context: ./e2e
+    depends_on:
+      - client
+      - api
+    environment:
+      API_URL: "http://api:8080"
+      CLIENT_URL: "http://client"
+    command: npx playwright test
+    volumes:
+      - ./e2e/test-results:/app/test-results
+      - ./e2e/blob-report:/app/blob-report
+    profiles:
+      - test

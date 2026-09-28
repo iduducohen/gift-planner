@@ -6,7 +6,9 @@
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:watch": "ng test",
+    "e2e": "ng e2e",
     "mock": "node mock/server.mjs"
   },
   "private": true,
@@ -25,15 +27,23 @@
     "@capacitor/haptics": "^8.0.2",
     "@ionic/angular": "^9.0.5",
     "@tanstack/angular-virtual": "^6.0.6",
+    "@vercel/analytics": "^2.0.1",
     "ionicons": "^8.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^22.2.0",
     "@angular/build": "^22.2.0",
     "@angular/cli": "^22.2.0",
     "@angular/compiler-cli": "^22.2.0",
     "@capacitor/cli": "^8.5.2",
+    "@playwright/test": "^1.48.0",
+    "jasmine-core": "^5.2.0",
+    "karma": "^6.4.0",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.0",
+    "karma-jasmine": "^5.1.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2"
   }

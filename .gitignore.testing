@@ -1,0 +1,22 @@
+# Test Coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Karma
+karma-debug.log
+karma.log
+
+# Playwright
+test-results/
+blob-report/
+playwright/.cache/
+
+# E2E
+e2e/test-results/
+e2e/blob-report/
+e2e/playwright-report/
+
+# Test artifacts
+*.trx
+TestResults/

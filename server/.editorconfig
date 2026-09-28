@@ -1,0 +1,4 @@
+# Overrides the user-profile .editorconfig, which sets generated_code = true
+# for every C# file and disables nullable checking.
+[*.cs]
+generated_code = false

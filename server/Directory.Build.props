@@ -1,0 +1,4 @@
+<Project>
+  <!-- Stops MSBuild from walking up to the user-profile Directory.Build.props,
+       which injects unrelated packages into every project. -->
+</Project>

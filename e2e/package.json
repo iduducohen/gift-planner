@@ -1,0 +1,16 @@
+{
+  "name": "gift-planner-e2e",
+  "version": "0.0.1",
+  "description": "End-to-end tests for Gift Planner",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  },
+  "packageManager": "npm@10.9.7"
+}
