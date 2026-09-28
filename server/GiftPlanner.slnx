@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GiftPlanner.Domain/GiftPlanner.Domain.csproj" />
+    <Project Path="src/GiftPlanner.Application/GiftPlanner.Application.csproj" />
+    <Project Path="src/GiftPlanner.Infrastructure/GiftPlanner.Infrastructure.csproj" />
+    <Project Path="src/GiftPlanner.Api/GiftPlanner.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GiftPlanner.Application.Tests/GiftPlanner.Application.Tests.csproj" />
+  </Folder>
+</Solution>

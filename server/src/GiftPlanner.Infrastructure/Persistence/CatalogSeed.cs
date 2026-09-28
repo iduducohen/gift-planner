@@ -19,8 +19,8 @@ internal static class CatalogSeed
     private static readonly Audience[] T = [Audience.Teen];
     private static readonly Audience[] K = [Audience.Kid];
     private static readonly string[] Partners = ["partner_f", "partner_m", "fiancee", "fiance"];
-    private static readonly string[] Romantic = ["birthday", "anniversary", "dating_anniversary", "valentines", "tu_beav"];
-    private static readonly string[] Work = ["colleague", "manager", "employee", "client", "team", "teacher"];
+    private static readonly string[] Family = ["mom", "dad", "grandma", "grandpa", "mother_in_law", "father_in_law", "aunt", "uncle", "sister", "brother"];
+    private static readonly string[] Close = [.. Partners, .. Family, "daughter", "son", "friend_f", "friend_m", "childhood_friend"];
     private static readonly string[] Any = [];
 
     public static Guid IdFor(string kind, string name) => new(MD5.HashData(Encoding.UTF8.GetBytes($"{kind}:{name}")));
@@ -34,16 +34,16 @@ internal static class CatalogSeed
     public static IReadOnlyList<CatalogIdea> Ideas() =>
     [
         I("פיקניק שקיעה אישי", "פינה מעוצבת מול השקיעה, אוכל טוב וברכה ממך.", IdeaKind.Experience,
-            ["שקיעות", "טבע וציפורים", "צילום", "יין"], [Moved, Surprised], A, Partners, Romantic, 550, 700, 5, 3, 4, 3, "sunset",
+            ["שקיעות", "טבע וציפורים", "צילום", "יין"], [Moved, Surprised], A, Partners, Any, 550, 700, 5, 3, 4, 3, "sunset",
             "צלם ל-30 דקות, כדי שהפעם היא תהיה בתמונה", ["מקום עם נוף לשקיעה", "עיצוב, שמיכות ותאורה", "מגש אירוח ויין", "זר פרחים קטן"]),
         I("יום הולדת בשלושה רגעים", "פרחים בבוקר, מתנה קטנה בצהריים, ארוחה בערב.", IdeaKind.Bundle,
-            ["פרחים", "מסעדות שף", "תכשיטים"], [Moved, Surprised], A, Partners, ["birthday"], 650, 750, 4, 3, 3, 5, "gift",
+            ["פרחים", "מסעדות שף", "תכשיטים"], [Moved, Surprised], A, Partners, ["birthday", "milestone_birthday"], 650, 750, 4, 3, 3, 5, "gift",
             null, ["זר פרחים עם משלוח", "מתנה אישית קטנה", "ארוחת ערב זוגית"]),
         I("אלבום מהטיולים שלכם", "התמונות שצולמו בטיולים, סוף סוף על נייר, עם כיתוב קצר ממך.", IdeaKind.Personal,
-            ["צילום", "טיולים בארץ", "טיולים בחו״ל"], [Moved], A, Any, Any, 250, 400, 3, 4, 3, 7, "frame",
+            ["צילום", "טיולים בארץ", "טיולים בחו״ל"], [Moved], A, Close, Any, 250, 400, 3, 4, 3, 7, "frame",
             "כריכת בד עם הקדשה מוטבעת", ["עד 40 עמודים", "עיצוב אישי", "משלוח עד הבית"]),
         I("בוקר ספא זוגי + פרחים בחדר", "הפינוק האהוב, עם תוספת שמחכה כשחוזרים.", IdeaKind.Pamper,
-            ["ספא", "עיסויים", "פרחים"], [Pampered], A, Partners, Romantic, 550, 700, 3, 1, 2, 3, "spa",
+            ["ספא", "עיסויים", "פרחים"], [Pampered], A, Partners, Any, 550, 700, 3, 1, 2, 3, "spa",
             null, ["עיסוי זוגי 50 דקות", "בריכה וג׳קוזי", "ארוחת בוקר קלה"]),
         I("סדנת צילום שקיעה עם צלם", "שעתיים עם צלם מקצועי במקום הכי יפה בשקיעה.", IdeaKind.Experience,
             ["צילום", "שקיעות", "קורסים ולמידה"], [Thrilled, Surprised], A, Any, Any, 400, 550, 5, 2, 5, 5, "camera"),
@@ -62,9 +62,9 @@ internal static class CatalogSeed
         I("ערב סטנדאפ + ארוחה", "ערב של צחוק, בדיוק מה שצריך.", IdeaKind.Experience,
             ["סטנדאפ", "מסעדות שכונתיות"], [Laugh], A, Any, Any, 400, 550, 3, 1, 3, 3, "mic"),
         I("עגילים בעיצוב אישי", "תכשיט שעוד אין, בעיצוב שמתאים בדיוק.", IdeaKind.Personal,
-            ["תכשיטים"], [Moved], A, Any, Any, 350, 450, 3, 2, 3, 10, "ring"),
+            ["תכשיטים"], [Moved], A, Close, Any, 350, 450, 3, 2, 3, 10, "ring"),
         I("לילה במלון בוטיק בעיר", "בריחה קטנה בלי לנסוע רחוק.", IdeaKind.Experience,
-            ["מלונות בוטיק", "סופ״ש בצימר"], [Pampered, Surprised], A, Partners, Romantic, 650, 900, 4, 2, 3, 5, "bed"),
+            ["מלונות בוטיק", "סופ״ש בצימר"], [Pampered, Surprised], A, Partners, Any, 650, 900, 4, 2, 3, 5, "bed"),
         I("שייט שקיעה ביפו", "שקיעה מהים, זווית שעוד לא ראיתם.", IdeaKind.Experience,
             ["ים וחופים", "שקיעות"], [Moved, Adventure], A, Any, Any, 500, 700, 4, 1, 4, 3, "boat"),
         I("כרטיסים להופעה", "ערב של מוזיקה שאוהבים, יחד.", IdeaKind.Experience,
@@ -74,7 +74,7 @@ internal static class CatalogSeed
         I("ערכת נרות ובישום לבית", "אווירה בבית, כל ערב.", IdeaKind.Product,
             ["נרות וריחות", "עיצוב הבית"], [Pampered], A, Any, Any, 180, 260, 1, 1, 1, 2, "candle"),
         I("אלבום ״365 סיבות״ בכתב ידך", "הכי אישי שיש. עולה מעט, שווה המון.", IdeaKind.Personal,
-            ["כתיבה", "זמן משפחה"], [Moved], A, Any, Any, 80, 150, 4, 5, 4, 7, "book"),
+            ["כתיבה", "זמן משפחה"], [Moved], A, Close, Any, 80, 150, 4, 5, 4, 7, "book"),
         I("טיול ג׳יפים במדבר", "הרפתקה, שקיעה במכתש ותה על האש.", IdeaKind.Experience,
             ["שטח וג׳יפים", "מדבר", "שקיעות"], [Adventure, Thrilled], A, Any, Any, 500, 750, 4, 2, 4, 5, "jeep"),
         I("תיק צילום מעוצב", "לציוד שנסחב לכל טיול.", IdeaKind.Product,
@@ -86,7 +86,7 @@ internal static class CatalogSeed
         I("סדנת בישול איטלקי זוגית", "מבשלים יחד, אוכלים יחד.", IdeaKind.Experience,
             ["בישול", "אוכל איטלקי"], [Laugh, Moved], A, Any, Any, 450, 600, 3, 1, 3, 4, "plate"),
         I("ספר מתכונים משפחתי מעוצב", "המתכונים של המשפחה, בספר אחד שיעבור לנכדים.", IdeaKind.Personal,
-            ["בישול", "אפייה", "זמן משפחה"], [Moved], A, Any, Any, 200, 320, 4, 4, 4, 14, "book"),
+            ["בישול", "אפייה", "זמן משפחה"], [Moved], A, Family, Any, 200, 320, 4, 4, 4, 14, "book"),
         I("ארוחת בוקר מפנקת עד הבית", "מתחילים את היום הנכון, בלי לצאת מהמיטה.", IdeaKind.Product,
             ["ארוחות בוקר", "קפה"], [Pampered, Surprised], A, Any, Any, 160, 240, 4, 1, 2, 2, "coffee"),
         I("סדנת וויסקי וטעימות", "ערב טעימות עם מומחה, ובקבוק הביתה.", IdeaKind.Experience,
@@ -110,11 +110,11 @@ internal static class CatalogSeed
         I("כרטיסים להצגה + ארוחה לפני", "ערב תרבות מושלם, בלי לחשוב על כלום.", IdeaKind.Experience,
             ["תיאטרון", "מסעדות שכונתיות"], [Moved, Pampered], A, Any, Any, 350, 600, 3, 1, 2, 4, "ticket"),
         I("מסגרת תמונות דיגיטלית עם תמונות המשפחה", "תמונות הנכדים מתחלפות לבד, כל יום.", IdeaKind.Personal,
-            ["נכדים", "זמן משפחה", "צילום"], [Moved], A, Any, Any, 300, 500, 3, 2, 3, 3, "frame"),
+            ["נכדים", "זמן משפחה", "צילום"], [Moved], A, Family, Any, 300, 500, 3, 2, 3, 3, "frame"),
         I("יום כיף משפחתי מתוכנן", "כל המשפחה, יום אחד, מתוכנן מההתחלה עד הסוף.", IdeaKind.Bundle,
-            ["זמן משפחה", "טיולים בארץ", "נכדים"], [Moved, Laugh], A, Any, Any, 300, 700, 4, 4, 3, 5, "heart"),
+            ["זמן משפחה", "טיולים בארץ", "נכדים"], [Moved, Laugh], A, Close, Any, 300, 700, 4, 4, 3, 5, "heart"),
         I("מארז קפה ושוקולד", "תודה קטנה שעושה את הבוקר.", IdeaKind.Product,
-            ["קפה", "שוקולד"], [Pampered], A, Work, Any, 80, 180, 1, 1, 1, 2, "coffee"),
+            ["קפה", "שוקולד"], [Pampered], A, Any, Any, 80, 180, 1, 1, 1, 2, "coffee"),
         I("עציץ מעוצב לשולחן", "משהו ירוק שנשאר.", IdeaKind.Product,
             ["צמחי בית", "עיצוב הבית"], [Moved], A, Any, Any, 90, 180, 1, 1, 2, 2, "plant"),
         I("ספר עם הקדשה אישית", "ספר שבחרת במיוחד, עם כמה מילים ממך.", IdeaKind.Personal,
