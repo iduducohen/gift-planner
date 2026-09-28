@@ -79,7 +79,7 @@ import { Steps } from '../../ui/steps';
   `,
   styles: `
     .date-row { position: relative; cursor: pointer; }
-    .date-input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+    .date-input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; pointer-events: auto; }
     .clear { position: relative; z-index: 1; border: 0; background: var(--surface-2); width: 32px; height: 32px; border-radius: 999px; display: flex; align-items: center; justify-content: center; }
     .soon { font-size: 15px; font-weight: 600; color: var(--accent); }
     .people { display: flex; gap: 18px; overflow-x: auto; }
