@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService, API_BASE } from './api.service';
+import { EmotionKey } from './models';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -80,7 +81,18 @@ describe('ApiService', () => {
 
   describe('session endpoints', () => {
     it('should create a session', () => {
-      const createReq = { recipientId: null, budgetSheqels: 500 };
+      const createReq = {
+        recipientId: null,
+        relationshipKey: 'partner_f',
+        occasionKey: 'birthday',
+        eventDate: null,
+        ageRangeKey: '35-44',
+        interests: ['photography'],
+        avoid: [],
+        notes: null,
+        budget: 500,
+        emotions: ['moved'] as EmotionKey[]
+      };
       service.createSession(createReq).subscribe(result => {
         expect(result).toBeTruthy();
       });
@@ -88,7 +100,7 @@ describe('ApiService', () => {
       const req = httpMock.expectOne(`${API_BASE}/gift-sessions`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(createReq);
-      req.flush({ id: 'session-1', recipientId: null, budgetSheqels: 500 });
+      req.flush({ id: 'session-1', status: 'pending', question: null });
     });
 
     it('should clarify a session', () => {
@@ -162,14 +174,33 @@ describe('ApiService', () => {
     });
 
     it('should create a recipient', () => {
-      const createReq = { name: 'John', gender: 'M', ageRange: '25-34' };
+      const createReq = {
+        nickname: 'John',
+        relationshipKey: 'partner_m',
+        ageRangeKey: '25-34',
+        interests: [],
+        avoid: [],
+        notes: null
+      };
       service.createRecipient(createReq).subscribe(result => {
         expect(result).toBeTruthy();
       });
 
       const req = httpMock.expectOne(`${API_BASE}/recipients`);
       expect(req.request.method).toBe('POST');
-      req.flush({ id: 'recipient-1', ...createReq });
+      req.flush({
+        id: 'recipient-1',
+        nickname: 'John',
+        relationshipKey: 'partner_m',
+        relationshipLabel: 'Partner',
+        ageRangeKey: '25-34',
+        interests: [],
+        avoid: [],
+        notes: null,
+        occasions: [],
+        history: [],
+        next: null
+      });
     });
 
     it('should delete a recipient', () => {
